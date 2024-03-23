@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List 📋 - Shams Haroon</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+        defer></script>
+</head>
+
+<body>
+    <div class="container" x-data="todoList()" draggable="true" @dragstart="onDragStart(event)" @drag="onDrag(event)" @dragend="onDragEnd()" :style="containerStyle">
+        <h1>Todo List 📋</h1>
+        <input class="text-box" x-model="newTodo" @keydown.enter="addTodo" placeholder="Add a new task..."
+            class="new-todo-input">
+            <ul class="todo-list">
+                <template x-for="(todo, index) in todos" :key="index">
+                    <li>
+                        <input type="checkbox" x-model="todo.completed" class="todo-checkbox">
+                        <span x-text="todo.title" @click="editTodo(index)" class="todo-title"></span>
+                        <button @click="deleteTodo(index)" class="delete-button">x</button>
+                    </li>
+                </template>
+            </ul>
+        <div class="filter-buttons">
+            <button @click="filter('all')" class="filter-button">All</button>
+            <button @click="filter('active')" class="filter-button">Active</button>
+            <button @click="filter('completed')" class="filter-button">Completed</button>
+        </div>
+        <div class="creator-tag">Created by Shams Haroon</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

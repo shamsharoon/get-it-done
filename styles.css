@@ -1,0 +1,142 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.text-box {
+    text-align: center;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.todo-title {
+    flex: 1;
+    margin-right: 10px; 
+    word-break: break-word; /* Allow long words to break and wrap */
+}
+
+.delete-button {
+    margin-left: 10px;
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.delete-button:hover {
+    background-color: #ff8873;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: max-height 0.5s; 
+    overflow: hidden; /* Hide overflow content */
+    max-width: 50vw;
+    min-width: 25vw;
+    min-height: 25vh;
+    max-height: 50vh;
+}
+
+.todo-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s; 
+}
+
+.todo-list li:hover .delete-button {
+    opacity: 1;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    padding: 5px 10px;
+    margin-left: auto;
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff8873;
+}
+
+input[type="text"] {
+    padding: 8px;
+    margin-bottom: 10px;
+    width: calc(100% - 16px);
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.creator-tag {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: #513434;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+
+button.filter {
+    margin-right: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.filter:hover {
+    background-color: #ccc;
+}
