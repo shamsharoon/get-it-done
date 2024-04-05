@@ -6,29 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List 📋 - Shams Haroon</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-        defer></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
     <div class="container" x-data="todoList()" draggable="true" @dragstart="onDragStart(event)" @drag="onDrag(event)" @dragend="onDragEnd()" :style="containerStyle">
         <h1>Todo List 📋</h1>
-        <input class="text-box" x-model="newTodo" @keydown.enter="addTodo" placeholder="Add a new task..."
-            class="new-todo-input">
-            <ul class="todo-list">
-                <template x-for="(todo, index) in todos" :key="index">
-                    <li>
-                        <input type="checkbox" x-model="todo.completed" class="todo-checkbox">
-                        <span x-text="todo.title" @click="editTodo(index)" class="todo-title"></span>
-                        <button @click="deleteTodo(index)" class="delete-button">x</button>
-                    </li>
-                </template>
-            </ul>
+        <input class="text-box new-todo-input" x-model="newTodo" @keydown.enter="addTodo" placeholder="Add a new task...">
+        <ul class="todo-list" @dragover.prevent="onDragOver($event, index)" @drop="onDragEnd()">
+            <template x-for="(todo, index) in filteredTodos" :key="index">
+                <li draggable="true" @dragstart="onDragStart(event, index)">
+                    <input type="checkbox" x-model="todo.completed" class="todo-checkbox">
+                    <span x-text="todo.title" @click="editTodo(index)" class="todo-title"></span>
+                    <button @click="deleteTodo(todo)" class="delete-button">x</button>
+                </li>
+            </template>
+            <template x-if="filteredTodos.length === 0">
+                <li>No todos found.</li>
+            </template>
+        </ul>
         <div class="filter-buttons">
-            <button @click="filter('all')" class="filter-button">All</button>
-            <button @click="filter('active')" class="filter-button">Active</button>
-            <button @click="filter('completed')" class="filter-button">Completed</button>
+            <button @click="filter('all')" :class="{ 'activated': filterType === 'all' }" class="filter-button">All: <span x-text="totalCount"></span></button>
+            <button @click="filter('active')" :class="{ 'activated': filterType === 'active' }" class="filter-button">Active: <span x-text="activeCount"></button>
+            <button @click="filter('completed')" :class="{ 'activated': filterType === 'completed' }" class="filter-button">Completed: <span x-text="completedCount"></button>
         </div>
+        <div class="under">
+            <button @click="deleteAll" class="delete-all-button">Delete All</button>
+            <button @click="deleteCompleted" class="delete-completed-button">Delete Completed</button>
+        </div>
+        
         <div class="creator-tag">Created by Shams Haroon</div>
     </div>
     <script src="script.js"></script>

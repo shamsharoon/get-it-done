@@ -6,7 +6,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
 .text-box {
@@ -53,8 +54,8 @@ li {
     transition: max-height 0.5s; 
     overflow: hidden; /* Hide overflow content */
     max-width: 50vw;
-    min-width: 25vw;
-    min-height: 25vh;
+    min-width: 70vw;
+    min-height: 70vh;
     max-height: 50vh;
 }
 
@@ -116,6 +117,10 @@ input[type="text"] {
     font-size: 14px;
 }
 
+.activated{
+    background-color: #db2222;
+}
+
 .creator-tag {
     position: fixed;
     bottom: 10px;
@@ -123,6 +128,14 @@ input[type="text"] {
     color: #513434;
     font-size: 25px;
     font-weight: 700;
+}
+.under{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+
 }
 
 

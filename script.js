@@ -1,9 +1,3 @@
-// TODO: 1. Fix the drag and drop feature to make it more like sticky notes.
-// TODO  2. Add a feature to delete all completed tasks.
-// TODO  3. Add a feature to edit a task.
-// TODO  4. Add a feature to filter tasks by active, completed, and all.
-// TODO  5. Add a feature to show the number of active, completed, and all tasks.
-
 function todoList() {
     let savedTodos = JSON.parse(localStorage.getItem('todos')) || [];
 
@@ -26,6 +20,7 @@ function todoList() {
             this.todos.push({ title: this.newTodo, completed: false });
             this.saveTodos();
             this.newTodo = '';
+            this.applyFilter();
         },
         editTodo(index) {
             let newTitle = prompt('Edit task:', this.todos[index].title);
@@ -34,13 +29,32 @@ function todoList() {
                 this.saveTodos();
             }
         },
-        deleteTodo(index) {
-            this.todos.splice(index, 1);
+        deleteTodo(todo) {
+            this.todos = this.todos.filter(item => item !== todo);
+            this.saveTodos();
+            this.filteredTodos = this.filteredTodos.filter(item => item !== todo); // Update filteredTodos
+        },
+        deleteCompleted() {
+            this.todos = this.todos.filter(todo => !todo.completed);
+            this.saveTodos();
+            this.filteredTodos = this.filteredTodos.filter(todo => !todo.completed); // Update filteredTodos after deleting completed todos
+        },
+        deleteAll() {
+            this.todos = [];
+            this.saveTodos();
+            this.filteredTodos = [];
+        },
+        toggleAll() {
+            let allCompleted = this.todos.every(todo => todo.completed);
+            this.todos.forEach(todo => (todo.completed = !allCompleted));
+            this.saveTodos();
+        }, 
+        clearCompleted() {
+            this.todos = this.todos.filter(todo => !todo.completed);
             this.saveTodos();
         },
-        // ! This function is not working as expected.
-        filter(type) {
-            switch (type) {
+        applyFilter() {
+            switch (this.filterType) {
                 case 'all':
                     this.filteredTodos = this.todos;
                     break;
@@ -52,13 +66,15 @@ function todoList() {
                     break;
             }
         },
-        // ! This function is not working as expected.
+        filter(type) {
+            this.filterType = type;
+            this.applyFilter(); // Update filteredTodos when filter changes
+        },
         onDragStart(event) {
             this.isDragging = true;
             this.initialX = event.clientX - this.offsetX;
             this.initialY = event.clientY - this.offsetY;
         },
-        // ! This function is not working as expected.
         onDrag(event) {
             if (this.isDragging) {
                 this.offsetX = event.clientX - this.initialX;
@@ -69,12 +85,20 @@ function todoList() {
                 };
             }
         },
-        // ! This function is not working as expected.
         onDragEnd() {
             this.isDragging = false;
         },
         saveTodos() {
             localStorage.setItem('todos', JSON.stringify(this.todos));
+        },
+        get activeCount() {
+            return this.todos.filter(todo => !todo.completed).length;
+        },
+        get completedCount() {
+            return this.todos.filter(todo => todo.completed).length;
+        },
+        get totalCount() {
+            return this.todos.length;
         }
     };
 }
