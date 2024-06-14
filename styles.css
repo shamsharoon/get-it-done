@@ -8,10 +8,13 @@ body {
     align-items: center;
     min-height: 100vh;
     min-width: 100vw;
+    overflow: hidden;
 }
 
 .text-box {
     text-align: center;
+    padding: 10px;
+    border-radius: 2rem;
 }
 
 li {
@@ -19,6 +22,10 @@ li {
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #e0e0e0;
+}
+
+li input, li span, li button {
+    flex-shrink: 1;
 }
 
 .todo-title {
@@ -32,7 +39,7 @@ li {
     background-color: #ff6f61;
     color: #fff;
     border: none;
-    border-radius: 3px;
+    border-radius: 2rem;
     cursor: pointer;
     transition: background-color 0.3s; 
 }
@@ -46,6 +53,7 @@ li {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
     width: 100%;
     padding: 20px;
     background-color: #fff;
@@ -53,10 +61,11 @@ li {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: max-height 0.5s; 
     overflow: hidden; /* Hide overflow content */
-    max-width: 50vw;
-    min-width: 70vw;
-    min-height: 70vh;
-    max-height: 50vh;
+    min-height: 100vh;
+}
+
+.todo-checkbox {
+    width: 20px;
 }
 
 .todo-list li {
@@ -67,6 +76,27 @@ li {
     border-bottom: 1px solid #e0e0e0;
     transition: background-color 0.3s; 
 }
+
+.not-found {
+    position: absolute;
+}
+
+
+ul{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    width: 100vw;
+    height: 40vh;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+}
+
+
 
 .todo-list li:hover .delete-button {
     opacity: 1;
@@ -122,9 +152,7 @@ input[type="text"] {
 }
 
 .creator-tag {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
+    display: flex;
     color: #513434;
     font-size: 25px;
     font-weight: 700;
@@ -138,6 +166,10 @@ input[type="text"] {
 
 }
 
+.filter-buttons button, .under button{
+    padding: 10px 20px;
+    border-radius: 2rem;
+}
 
 button.filter {
     margin-right: 5px;

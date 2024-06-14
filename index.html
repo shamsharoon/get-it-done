@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Todo List 📋 - Shams Haroon</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -13,8 +14,9 @@
     <div class="container" x-data="todoList()" draggable="true" @dragstart="onDragStart(event)" @drag="onDrag(event)" @dragend="onDragEnd()" :style="containerStyle">
         <h1>Todo List 📋</h1>
         <input class="text-box new-todo-input" x-model="newTodo" @keydown.enter="addTodo" placeholder="Add a new task...">
+        
         <ul class="todo-list" @dragover.prevent="onDragOver($event, index)" @drop="onDragEnd()">
-            <template x-for="(todo, index) in filteredTodos" :key="index">
+            <template class="grid" x-for="(todo, index) in filteredTodos" :key="index">
                 <li draggable="true" @dragstart="onDragStart(event, index)">
                     <input type="checkbox" x-model="todo.completed" class="todo-checkbox">
                     <span x-text="todo.title" @click="editTodo(index)" class="todo-title"></span>
@@ -22,9 +24,10 @@
                 </li>
             </template>
             <template x-if="filteredTodos.length === 0">
-                <li>No todos found.</li>
+                <li class="not-found">No todos found.</li>
             </template>
         </ul>
+        
         <div class="filter-buttons">
             <button @click="filter('all')" :class="{ 'activated': filterType === 'all' }" class="filter-button">All: <span x-text="totalCount"></span></button>
             <button @click="filter('active')" :class="{ 'activated': filterType === 'active' }" class="filter-button">Active: <span x-text="activeCount"></button>
@@ -35,7 +38,7 @@
             <button @click="deleteCompleted" class="delete-completed-button">Delete Completed</button>
         </div>
         
-        <div class="creator-tag">Created by Shams Haroon</div>
+        <div class="creator-tag"><p>Created by Shams Haroon</p></div>
     </div>
     <script src="script.js"></script>
 </body>
