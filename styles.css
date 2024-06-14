@@ -96,13 +96,24 @@ p{
     width: 20px;
 }
 
+.not-found{
+    font-weight: 700;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .todo-list li {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
     padding: 10px;
+    height: 10px;
     border-bottom: 1px solid #e0e0e0;
     transition: background-color 0.3s; 
+    overflow-y: hidden;
 }
 
 
@@ -112,7 +123,7 @@ ul{
     justify-items: center;
     align-items: center;
     width: 100vw;
-    height: 40vh;
+    height: 20vh;
     justify-items: center;
     align-items: center;
     overflow: hidden;
@@ -133,13 +144,11 @@ h1 {
     font-size: 24px;
 }
 
-.not-found{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
+.not-found p{
+    font-size: 1rem;
     font-weight: 700;
+    padding: 0;
+
 }
 
 ul {
