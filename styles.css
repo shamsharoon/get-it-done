@@ -71,6 +71,7 @@ li input, li span, li button {
     transition: max-height 0.5s; 
     overflow: hidden; /* Hide overflow content */
     min-height: 100vh;
+    transform: translateY(-150px);
 }
 
 .nav{
