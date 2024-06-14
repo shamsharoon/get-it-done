@@ -14,7 +14,7 @@ function todoList() {
         addTodo() {
             if (this.newTodo.trim() === '') return;
             if (this.newTodo.split(' ').length > 5) {
-                alert('Todo item should be a maximum of 15 words.');
+                alert('Todo item should be a maximum of 5 words.');
                 return;
             }
             this.todos.push({ title: this.newTodo, completed: false });
@@ -48,7 +48,7 @@ function todoList() {
             let allCompleted = this.todos.every(todo => todo.completed);
             this.todos.forEach(todo => (todo.completed = !allCompleted));
             this.saveTodos();
-        }, 
+        },
         clearCompleted() {
             this.todos = this.todos.filter(todo => !todo.completed);
             this.saveTodos();
