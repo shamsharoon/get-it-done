@@ -16,3 +16,6 @@ A simple todo list application built with HTML, CSS, JavaScript, and Alpine.js. 
 
 ## Purpose 📚
 This project serves as a learning tool for web development, offering hands-on experience with front-end technologies. By building a todo list app, you'll gain a deeper understanding of HTML, CSS, JavaScript, and Alpine.js, and how they can be used to create interactive web applications.
+
+## URL 🌐
+https://shamsharoon.github.io/get-it-done/
