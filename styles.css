@@ -9,6 +9,7 @@ body {
     min-height: 100vh;
     min-width: 100vw;
     overflow: hidden;
+    flex-direction: column;
 }
 
 .text-box {
@@ -17,7 +18,8 @@ body {
     border-radius: 2rem;
 }
 
-li {
+
+.hello {
     display: flex;
     align-items: center;
     padding: 10px;
@@ -56,12 +58,38 @@ li input, li span, li button {
     gap: 20px;
     width: 100%;
     padding: 20px;
-    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: max-height 0.5s; 
     overflow: hidden; /* Hide overflow content */
     min-height: 100vh;
+}
+
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center;
+    padding-top: 20px;
+}
+
+i{
+    font-size: 50px;
+    color: #ff6f61;
+    cursor: pointer;
+    padding: 15px;
+}
+
+i:hover{
+    background-color: #ff6f61;
+    color: white;
+    border-radius: 4rem;
+    scale: 1;
+}
+
+p{
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .todo-checkbox {
@@ -75,10 +103,6 @@ li input, li span, li button {
     padding: 10px;
     border-bottom: 1px solid #e0e0e0;
     transition: background-color 0.3s; 
-}
-
-.not-found {
-    position: absolute;
 }
 
 
@@ -107,6 +131,15 @@ h1 {
     color: #333;
     margin-bottom: 20px;
     font-size: 24px;
+}
+
+.not-found{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: 700;
 }
 
 ul {
@@ -154,7 +187,7 @@ input[type="text"] {
 .creator-tag {
     display: flex;
     color: #513434;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 700;
 }
 .under{
@@ -165,6 +198,8 @@ input[type="text"] {
     margin-top: 10px;
 
 }
+
+
 
 .filter-buttons button, .under button{
     padding: 10px 20px;
@@ -184,4 +219,14 @@ button.filter {
 
 button.filter:hover {
     background-color: #ccc;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+    
 }
