@@ -22,8 +22,17 @@ body {
 .hello {
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
     padding: 10px;
     border-bottom: 1px solid #e0e0e0;
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+}
+
+.hello span{
+    text-align: center;
+    height: 100%;
 }
 
 li input, li span, li button {
@@ -118,10 +127,8 @@ p{
 
 
 ul{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     width: 100vw;
     height: 20vh;
     justify-items: center;
