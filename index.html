@@ -1,54 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <title>Get It Done</title>
-    <link rel="icon" type="image/x-icon" href="/images/todolist.png">
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
+    <link rel="icon" type="image/x-icon" href="/images/todolist.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Removed Alpine.js script -->
+  </head>
 
-<body>
-
+  <body>
     <div class="nav">
+      <a href="https://www.linkedin.com/in/shamsharoon/" target="_blank">
         <i class="fa-brands fa-linkedin"></i>
-        <p>shams haroon</p>
+      </a>
+      <p>shams haroon</p>
+      <a href="https://github.com/shamsharoon" target="_blank">
         <i class="fa-brands fa-github"></i>
+      </a>
     </div>
 
-
-
-    <div class="container" x-data="todoList()" draggable="true" @dragstart="onDragStart(event)" @drag="onDrag(event)" @dragend="onDragEnd()" :style="containerStyle">
+    <div class="container" id="todoContainer">
+      <div class="app-header" id="appHeader">
+        <div class="drag-handle"><i class="fas fa-grip-lines"></i></div>
         <h1>Todo List 📋</h1>
-        <input class="text-box new-todo-input" x-model="newTodo" @keydown.enter="addTodo" placeholder="Add a new task...">
-        
-        <ul class="todo-list" @dragover.prevent="onDragOver($event, index)" @drop="onDragEnd()">
-            <template class="grid" x-for="(todo, index) in filteredTodos" :key="index">
-                <li class="hello" draggable="true" @dragstart="onDragStart(event, index)">
-                    <input type="checkbox" x-model="todo.completed" class="todo-checkbox">
-                    <span x-text="todo.title" @click="editTodo(index)" class="todo-title"></span>
-                    <button @click="deleteTodo(todo)" class="delete-button">x</button>
-                </li>
-            </template>
-            <template x-if="filteredTodos.length === 0">
-                <li class="not-found"><p>No todos found.</p></li>
-            </template>
-        </ul>
-        
-        <div class="filter-buttons">
-            <button @click="filter('all')" :class="{ 'activated': filterType === 'all' }" class="filter-button">All: <span x-text="totalCount"></span></button>
-            <button @click="filter('active')" :class="{ 'activated': filterType === 'active' }" class="filter-button">Active: <span x-text="activeCount"></button>
-            <button @click="filter('completed')" :class="{ 'activated': filterType === 'completed' }" class="filter-button">Completed: <span x-text="completedCount"></button>
-        </div>
-        <div class="under">
-            <button @click="deleteAll" class="delete-all-button">Delete All</button>
-            <button @click="deleteCompleted" class="delete-completed-button">Delete Completed</button>
-        </div>
+      </div>
+
+      <div class="input-container">
+        <input
+          class="text-box new-todo-input"
+          id="newTodoInput"
+          placeholder="Add a new task..."
+        />
+        <button id="addTodoBtn" class="add-button">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+
+      <ul class="todo-list" id="todoList">
+        <!-- Todo items will be inserted here dynamically -->
+      </ul>
+
+      <div class="filter-buttons">
+        <button id="filterAllBtn" class="filter-button activated">
+          All <span class="counter" id="totalCount">0</span>
+        </button>
+        <button id="filterActiveBtn" class="filter-button">
+          Active <span class="counter" id="activeCount">0</span>
+        </button>
+        <button id="filterCompletedBtn" class="filter-button">
+          Completed <span class="counter" id="completedCount">0</span>
+        </button>
+      </div>
+
+      <div class="action-buttons">
+        <button id="clearCompletedBtn" class="action-button">
+          <i class="fas fa-check-double"></i> Clear Completed
+        </button>
+        <button id="toggleAllBtn" class="action-button">
+          <i class="fas fa-tasks"></i> Toggle All
+        </button>
+        <button id="deleteAllBtn" class="danger-button">
+          <i class="fas fa-trash"></i> Delete All
+        </button>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>
