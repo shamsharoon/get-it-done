@@ -14,6 +14,16 @@ document.addEventListener("DOMContentLoaded", function () {
     totalCount: document.getElementById("totalCount"),
     activeCount: document.getElementById("activeCount"),
     completedCount: document.getElementById("completedCount"),
+    dialogOverlay: document.getElementById("dialogOverlay"),
+    editDialog: document.getElementById("editDialog"),
+    confirmDialog: document.getElementById("confirmDialog"),
+    editTaskInput: document.getElementById("editTaskInput"),
+    editCancelBtn: document.getElementById("editCancelBtn"),
+    editSaveBtn: document.getElementById("editSaveBtn"),
+    confirmTitle: document.getElementById("confirmTitle"),
+    confirmMessage: document.getElementById("confirmMessage"),
+    confirmCancelBtn: document.getElementById("confirmCancelBtn"),
+    confirmOkBtn: document.getElementById("confirmOkBtn"),
   };
 
   const state = {
@@ -28,6 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
       currentY: 0,
     },
   };
+
+  let currentTodoId = null;
+  let pendingAction = null;
 
   function loadTodos() {
     return JSON.parse(localStorage.getItem("todos")) || [];
@@ -47,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function initialize() {
     setupEventListeners();
+    setupDialogs();
     applyFilter();
     updateCounters();
   }
@@ -112,14 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function editTodo(id) {
-    const todo = findTodoById(id);
-    if (!todo) return;
-
-    const newTitle = prompt("Edit task:", currentTitle);
-    if (isValidTitle(newTitle)) {
-      updateTodoTitle(todo, newTitle);
-      refreshUI();
-    }
+    editTaskWithDialog(id);
   }
 
   function findTodoById(id) {
@@ -137,15 +144,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function deleteTodo(id) {
-    if (confirmAction("Are you sure you want to delete this task?")) {
-      removeTodoById(id);
-      refreshUI();
-      notifyUser("Task deleted!");
-    }
-  }
-
-  function confirmAction(message) {
-    return confirm(message);
+    confirmActionWithDialog(
+      "Delete Task",
+      "Are you sure you want to delete this task?",
+      () => {
+        removeTodoById(id);
+        refreshUI();
+        notifyUser("Task deleted!");
+      }
+    );
   }
 
   function removeTodoById(id) {
@@ -170,11 +177,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (confirmAction(`Delete ${completedCount} completed tasks?`)) {
-      removeCompletedTodos();
-      refreshUI();
-      notifyUser("Completed tasks deleted!");
-    }
+    confirmActionWithDialog(
+      "Delete Completed",
+      `Delete ${completedCount} completed tasks?`,
+      () => {
+        removeCompletedTodos();
+        refreshUI();
+        notifyUser("Completed tasks deleted!");
+      }
+    );
   }
 
   function countCompletedTodos() {
@@ -192,11 +203,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (confirmAction(`Delete all ${state.todos.length} tasks?`)) {
-      clearAllTodos();
-      refreshUI();
-      notifyUser("All tasks deleted!");
-    }
+    confirmActionWithDialog(
+      "Delete All",
+      `Delete all ${state.todos.length} tasks?`,
+      () => {
+        clearAllTodos();
+        refreshUI();
+        notifyUser("All tasks deleted!");
+      }
+    );
   }
 
   function clearAllTodos() {
@@ -239,7 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
       btn.classList.remove("activated");
     });
 
-    // Add activated class to the appropriate button
     if (state.filterType === "all")
       elements.filterAllBtn.classList.add("activated");
     if (state.filterType === "active")
@@ -347,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function refreshUI() {
-    applyFilter(); // This will also trigger renderTodos() and updateCounters()
+    applyFilter();
   }
 
   // --- DRAG FUNCTIONALITY ---
@@ -462,6 +476,89 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
       toast.classList.remove("show");
     }, 3000);
+  }
+
+  // --- DIALOGS ---
+  function setupDialogs() {
+    // Edit dialog event listeners
+    elements.editCancelBtn.addEventListener("click", closeDialogs);
+    elements.editSaveBtn.addEventListener("click", handleEditSave);
+    elements.editTaskInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleEditSave();
+    });
+
+    // Confirm dialog event listeners
+    elements.confirmCancelBtn.addEventListener("click", closeDialogs);
+    elements.confirmOkBtn.addEventListener("click", handleConfirmAction);
+
+    // Close dialog when clicking outside
+    elements.dialogOverlay.addEventListener("click", (e) => {
+      if (e.target === elements.dialogOverlay) {
+        closeDialogs();
+      }
+    });
+  }
+
+  function editTaskWithDialog(id) {
+    const todo = findTodoById(id);
+    if (!todo) return;
+
+    currentTodoId = id;
+    elements.editTaskInput.value = todo.title;
+
+    showDialog("edit");
+    elements.editTaskInput.focus();
+    elements.editTaskInput.select();
+  }
+
+  function handleEditSave() {
+    const newTitle = elements.editTaskInput.value.trim();
+    if (isValidTitle(newTitle)) {
+      const todo = findTodoById(currentTodoId);
+      if (todo) {
+        updateTodoTitle(todo, newTitle);
+        refreshUI();
+        notifyUser("Task updated successfully!");
+      }
+    }
+    closeDialogs();
+  }
+
+  function confirmActionWithDialog(title, message, action) {
+    elements.confirmTitle.textContent = title;
+    elements.confirmMessage.textContent = message;
+
+    pendingAction = action;
+
+    showDialog("confirm");
+  }
+
+  function handleConfirmAction() {
+    if (typeof pendingAction === "function") {
+      pendingAction();
+    }
+    closeDialogs();
+  }
+
+  function showDialog(type) {
+    elements.dialogOverlay.classList.add("active");
+
+    if (type === "edit") {
+      elements.editDialog.classList.add("active");
+      elements.confirmDialog.classList.remove("active");
+    } else if (type === "confirm") {
+      elements.confirmDialog.classList.add("active");
+      elements.editDialog.classList.remove("active");
+    }
+  }
+
+  function closeDialogs() {
+    elements.dialogOverlay.classList.remove("active");
+    elements.editDialog.classList.remove("active");
+    elements.confirmDialog.classList.remove("active");
+
+    currentTodoId = null;
+    pendingAction = null;
   }
 
   initialize();

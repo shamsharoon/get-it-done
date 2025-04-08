@@ -364,3 +364,78 @@ h1 {
     flex-direction: column;
   }
 }
+
+/* Dialog styles */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.dialog-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s linear;
+}
+
+.dialog {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 300px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dialog-overlay.active .dialog {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.dialog h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.dialog input.text-box {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.dialog .cancel-button,
+.dialog .save-button,
+.dialog .danger-button {
+  padding: 8px 16px;
+}
+
+.edit-dialog,
+.confirm-dialog {
+  display: none;
+}
+
+.edit-dialog.active,
+.confirm-dialog.active {
+  display: block;
+}

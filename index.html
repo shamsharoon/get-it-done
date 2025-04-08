@@ -69,6 +69,35 @@
         </button>
       </div>
     </div>
+
+    <!-- Dialog containers -->
+    <div id="dialogOverlay" class="dialog-overlay">
+      <!-- Edit Task Dialog -->
+      <div id="editDialog" class="dialog edit-dialog">
+        <h3>Edit Task</h3>
+        <input
+          type="text"
+          id="editTaskInput"
+          class="text-box"
+          placeholder="Task description..."
+        />
+        <div class="dialog-buttons">
+          <button id="editCancelBtn" class="cancel-button">Cancel</button>
+          <button id="editSaveBtn" class="save-button">Save</button>
+        </div>
+      </div>
+
+      <!-- Confirmation Dialog -->
+      <div id="confirmDialog" class="dialog confirm-dialog">
+        <h3 id="confirmTitle">Confirm Action</h3>
+        <p id="confirmMessage">Are you sure you want to perform this action?</p>
+        <div class="dialog-buttons">
+          <button id="confirmCancelBtn" class="cancel-button">Cancel</button>
+          <button id="confirmOkBtn" class="danger-button">OK</button>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
